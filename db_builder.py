@@ -22,7 +22,7 @@ for k in d:
 
 # Making Courses ? ? ? ?
 
-q = "CREATE TABLE courses (code TEXT, id INTEGER, mark INTEGER)"
+q = "CREATE TABLE courses (code TEXT, mark INTEGER, id INTEGER)"
 c.execute(q)
 raw = open("courses.csv")
 parsed = csv.DictReader(raw)
