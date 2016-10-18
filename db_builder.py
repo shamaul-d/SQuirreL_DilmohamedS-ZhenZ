@@ -17,7 +17,7 @@ c.execute(q)    #run SQL query
 fObj = open("peeps.csv") 
 d=csv.DictReader(fObj)
 for k in d:
-    p = "INSERT INTO students VALUES ('"+k['name']+"',"+k['age']+","+k['id']+")"
+    p = "INSERT INTO students VALUES ('%s', %s, %s)"%(k['name'], k['age'], k['id'])
     c.execute(p)
 
 # Making Courses ? ? ? ?
@@ -27,7 +27,7 @@ c.execute(q)
 raw = open("courses.csv")
 parsed = csv.DictReader(raw)
 for k in parsed:
-    stuff = "INSERT INTO courses VALUES ('"+k['code']+"',"+k['mark']+","+k['id']+")"
+    stuff = "INSERT INTO courses VALUES ('%s', %s, %s)"%(k['code'], k['mark'], k['id'])
     c.execute(stuff)
 
 #==========================================================
