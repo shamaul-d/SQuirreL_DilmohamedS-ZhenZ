@@ -8,7 +8,7 @@ c = db.cursor()    #facilitate db ops
 
 #==========================================================
 # Parse Data
-cmd = "SELECT name, mark \
+cmd = "SELECT name, mark, students.id \
        FROM students, courses \
        WHERE students.id = courses.id"
 raw_scores = c.execute(cmd)
@@ -20,20 +20,21 @@ for i in raw_scores:
         averages[i[0]][0] += i[1]
         averages[i[0]][1] += 1
     else:
-        averages[i[0]] = [i[1], 1]
+        averages[i[0]] = [i[1], 1, i[2]]
 
 #for i in averages:
 #    print averages[i][0], averages[i][1]
 
 # Add Averages To Database
-cmd = "CREATE TABLE gradebook (name TEXT, average REAL)"
+cmd = "CREATE TABLE gradebook (name TEXT, id INTEGER, average REAL)"
 c.execute(cmd)
 for i in averages:
     avg = float(averages[i][0]) / averages[i][1]
-    cmd = "INSERT INTO gradebook VALUES ('%s', %s)"%(i, avg)
+    sid = averages[i][2]
+    cmd = "INSERT INTO gradebook VALUES ('%s', %s, %s)"%(i, sid, avg)
     c.execute(cmd)
-    print i, avg #Debugging
-    
+    print i, sid, avg #Debugging
+
 #==========================================================
 db.commit() #save changes
 db.close()  #close database
